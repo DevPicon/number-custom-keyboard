@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="number_pad_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center|bottom</item>
+        <item name="android:gravity">center|bottom</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+</resources>
