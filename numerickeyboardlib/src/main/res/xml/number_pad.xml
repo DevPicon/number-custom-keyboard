@@ -49,10 +49,9 @@
             android:codes="57"
             android:keyLabel="9" />
         <Key
-            android:codes="10"
-            android:isSticky="true"
+            android:codes="-4"
             android:keyHeight="120dp"
-            android:keyLabel="ENTER"
+            android:keyLabel="@string/done"
             android:keyWidth="40%p" />
     </Row>
 

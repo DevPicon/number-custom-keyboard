@@ -4,12 +4,13 @@ import android.inputmethodservice.Keyboard
 import android.inputmethodservice.KeyboardView
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 
 /**
  * Created by devpicon on 10/18/17.
  */
-public class NumberPadKeyboardActionListener(val editText: EditText) : KeyboardView.OnKeyboardActionListener {
+class NumberPadKeyboardActionListener(val listener: DoneActionListener?, val editText: EditText, val container: View) : KeyboardView.OnKeyboardActionListener {
 
     private val TAG = "NumberPadKeyboard"
 
@@ -31,8 +32,6 @@ public class NumberPadKeyboardActionListener(val editText: EditText) : KeyboardV
     override fun swipeDown() {
     }
 
-    val KEYCODE_DOT: Int = 46
-
     override fun onKey(primaryCode: Int, keyCodes: IntArray) {
 
         when (primaryCode) {
@@ -46,6 +45,16 @@ public class NumberPadKeyboardActionListener(val editText: EditText) : KeyboardV
                     editText.setText("")
                     editText.append(selectedText.subSequence(0, selectedText.length - 1))
 
+                }
+            }
+            Keyboard.KEYCODE_CANCEL -> {
+                container.visibility = View.GONE
+            }
+            Keyboard.KEYCODE_DONE -> {
+                if (listener != null) {
+                    listener.done()
+                } else {
+                    container.visibility = View.GONE
                 }
             }
             else -> {
