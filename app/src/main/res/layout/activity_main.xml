@@ -16,8 +16,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <com.devpicon.android.numerickeyboardlib.CustomeEditText
         android:id="@+id/edt_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edt_input_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

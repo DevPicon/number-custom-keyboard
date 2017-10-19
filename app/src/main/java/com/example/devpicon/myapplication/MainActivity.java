@@ -1,5 +1,7 @@
 package com.example.devpicon.myapplication;
 
+import android.app.Activity;
+import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
@@ -10,46 +12,48 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.devpicon.android.numerickeyboardlib.CustomeEditText;
+import com.devpicon.android.numerickeyboardlib.DoneActionListener;
+import com.devpicon.android.numerickeyboardlib.NumberKeyboard;
 import com.devpicon.android.numerickeyboardlib.NumberPadKeyboardActionListener;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener, DoneActionListener {
 
     RelativeLayout relativeLayout;
-    EditText edtText;
+    CustomeEditText edtText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("UnTAG", "brbrbrbr");
-
-        edtText = (EditText) findViewById(R.id.edt_input);
+        edtText = (CustomeEditText) findViewById(R.id.edt_input);
         relativeLayout = (RelativeLayout) findViewById(R.id.my_relative_layout);
         edtText.setOnTouchListener(this);
+        edtText.setContainer(relativeLayout);
 
-    }
-
-    private void createKeyboard() {
-        KeyboardView keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_view, null);
-        Keyboard keyboard = new Keyboard(this, R.xml.number_pad);
-        keyboardView.setKeyboard(keyboard);
-        keyboardView.setOnKeyboardActionListener(new NumberPadKeyboardActionListener(edtText));
-        relativeLayout.addView(keyboardView);
     }
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (view.getId()) {
             case R.id.edt_input:
-                createKeyboard();
-                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromInputMethod(getWindow().getDecorView().getRootView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromInputMethod(edtText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(edtText.getWindowToken(), 0);
+
+                relativeLayout.addView(NumberKeyboard.INSTANCE.createKeyboard(this, getLayoutInflater(), edtText, relativeLayout, null));
                 edtText.requestFocus();
                 relativeLayout.setVisibility(View.VISIBLE);
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void done() {
+        Toast.makeText(this, "Hice done!", Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,6 +1,7 @@
 package com.devpicon.android.numerickeyboardlib
 
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.util.Log
 import android.view.KeyEvent
@@ -17,6 +18,21 @@ class CustomeEditText(val ownContext: Context, val attrs: AttributeSet) : EditTe
 
      var container: View? = null
 
+    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+        super.onFocusChanged(focused, direction, previouslyFocusedRect)
+
+        if(!hasFocus() || hasWindowFocus()){
+
+            if (container != null) {
+                if (container?.visibility != View.GONE
+                        && container?.visibility != View.INVISIBLE) {
+                    container?.visibility = View.GONE
+                }
+            } else {
+                Log.d(TAG, "No se seteó el container")
+            }
+        }
+    }
 
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
