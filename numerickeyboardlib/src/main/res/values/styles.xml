@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="number_pad_keyboard" >
+        <!--item name="myKeyBackground">@drawable/btn_keyboard_key_lxx_dark</item-->
+        <item name="myKeyBackground">@color/colorPrimary</item>
+    </style>
+
     <style name="number_pad_container">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -9,5 +14,8 @@
         <item name="android:gravity">center|bottom</item>
         <item name="android:visibility">gone</item>
     </style>
+
+
+
 
 </resources>
